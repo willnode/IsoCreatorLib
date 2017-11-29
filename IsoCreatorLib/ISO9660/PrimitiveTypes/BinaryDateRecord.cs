@@ -1,21 +1,38 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ISO9660.PrimitiveTypes {
-	internal class BinaryDateRecord {
-		public byte Year;					// number of years since 1900
+namespace ISO9660.PrimitiveTypes
+{
+    internal class BinaryDateRecord
+    {
 
-		public byte Month;					// month, where 1=January, 2=February, etc.
+        /// <summary>
+        /// number of years since 1900
+        /// </summary>
+		public byte Year;
 
-		public byte DayOfMonth;				// day of month, in the range from 1 to 31
+        /// <summary>
+        /// month, where 1=January, 2=February, etc.
+        /// </summary>
+        public byte Month;
 
-		public byte Hour;					// hour, in the range from 0 to 23
+        /// <summary>
+        /// day of month, in the range from 1 to 31
+        /// </summary>
+        public byte DayOfMonth;
 
-		public byte Minute;					// minute, in the range from 0 to 59
+        /// <summary>
+        /// hour, in the range from 0 to 23
+        /// </summary>
+		public byte Hour;
 
-		public byte Second;					/* second, in the range from 0 to 59
-	                                         * (for DOS this is always an even number)
-	                                         */
-	}
+        /// <summary>
+        /// minute, in the range from 0 to 59
+        /// </summary>
+        public byte Minute;
+
+        /// <summary>
+        /// second, in the range from 0 to 59
+        /// (for DOS this is always an even number)
+        /// </summary>
+        public byte Second;
+    }
 }

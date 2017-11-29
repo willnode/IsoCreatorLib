@@ -1,32 +1,26 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BER.CDCat.Export {
-	public class TreeNodeCollection : System.Collections.CollectionBase {
-		public int Add( TreeNode node ) {
-			return this.InnerList.Add( node );
-		}
+namespace BER.CDCat.Export
+{
+    public class TreeNodeCollection : CollectionBase
+    {
 
-		public void AddRange( TreeNodeCollection collection ) {
-			this.InnerList.AddRange( collection );
-		}
+        public int Add(TreeNode node) => InnerList.Add(node);
 
-		public void Remove( TreeNode node ) {
-			this.InnerList.Remove( node );
-		}
+        public void AddRange(TreeNodeCollection collection) => InnerList.AddRange(collection);
 
-		public TreeNode this[int index] {
-			get {
-				return (TreeNode)this.InnerList[index];
-			}
-			set {
-				this.InnerList[index] = value;
-			}
-		}
+        public void Remove(TreeNode node) => InnerList.Remove(node);
 
-		public TreeNode[] ToArray() {
-			return (TreeNode[])this.InnerList.ToArray( typeof( TreeNode ) );
-		}
-	}
+        public TreeNode this[int index]
+        {
+            get => (TreeNode)InnerList[index];
+            set { InnerList[index] = value; }
+        }
+
+        public TreeNode[] ToArray() => (TreeNode[]) InnerList.ToArray(typeof(TreeNode));
+
+    }
 }

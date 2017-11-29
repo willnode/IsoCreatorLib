@@ -5,7 +5,7 @@ using System.IO;
 using ISO9660.PrimitiveTypes;
 using ISO9660.Enums;
 
-namespace IsoCreator.IsoWrappers {
+namespace IsoCreatorLib.IsoWrappers {
 	internal class VolumeDescriptorWrapper {
 		#region Fields
 

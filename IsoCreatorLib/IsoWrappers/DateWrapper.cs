@@ -5,7 +5,7 @@ using System.IO;
 using ISO9660;
 using ISO9660.PrimitiveTypes;
 
-namespace IsoCreator.IsoWrappers {
+namespace IsoCreatorLib.IsoWrappers {
 	internal class DateWrapper {
 		#region Fields
 

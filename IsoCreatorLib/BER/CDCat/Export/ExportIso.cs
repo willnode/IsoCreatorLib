@@ -1,126 +1,59 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using IsoCreatorLib;
 
-namespace BER.CDCat.Export {
+namespace BER.CDCat.Export
+{
 
-	/// <summary>
-	/// This class implements the interface required by CDCat for its export plugins.
-	/// It is used only when compiled as external library, and only by CDCat.
-	/// </summary>
-	public class ExportIso : BER.CDCat.Export.IExportPlugin {
-		#region Fields
+    /// <summary>
+    /// This class implements the interface required by CDCat for its export plugins.
+    /// It is used only when compiled as external library, and only by CDCat.
+    /// </summary>
+    public class ExportIso : IExportPlugin
+    {
+        
+        
+        public ExportIso()
+        {
+            Creator.Progress += delegate (object sender, ProgressEventArgs e) { Progress?.Invoke(sender, e); };
+            Creator.Abort += delegate (object sender, AbortEventArgs e) { Abort?.Invoke(sender, e); };
+            Creator.Finish += delegate (object sender, FinishEventArgs e) { Finished?.Invoke(sender, e); };
+        }
 
-		private IsoCreator.IsoCreator m_creator = new IsoCreator.IsoCreator();
-		private BER.CDCat.Export.TreeNode m_volume;
-		private string m_fileName;
+        private IsoCreator Creator { get; } = new IsoCreator();
 
-		#endregion
+        public string ID => "ExportISO";
 
-		#region Constructors
+        public string Name => "ISO";
 
-		public ExportIso() {
-			m_creator.Progress += new ProgressDelegate( creator_Progress );
-			m_creator.Abort += new AbortDelegate( creator_Abort );
-			m_creator.Finish += new FinishDelegate( creator_Finished );
-		}
+        public string Extension => "iso";
 
-		void creator_Finished( object sender, FinishEventArgs e ) {
-			if ( this.Finished != null ) {
-				this.Finished( sender, e );
-			}
-		}
+        public string Description => "CD image with virtual files";
 
-		void creator_Abort( object sender, AbortEventArgs e ) {
-			if ( this.Abort != null ) {
-				this.Abort( sender, e );
-			}
-		}
+        public TreeNode Volume { get; set; }
 
-		void creator_Progress( object sender, ProgressEventArgs e ) {
-			if ( this.Progress != null ) {
-				this.Progress( sender, e );
-			}
-		}
+        public string FileName { get; set; }
 
-		#endregion
+        public void DoExport()
+        {
+            if (Volume == null || FileName == null)
+                return;
 
-		#region IExportPlugin Members
+            Creator.Tree2Iso(Volume, FileName);
+        }
 
-		public string ID {
-			get {
-				return "ExportISO";
-			}
-		}
+        public void DoExport(BER.CDCat.Export.TreeNode volume, string fileName)
+        {
+            Volume = volume;
+            FileName = fileName;
+            Creator.Tree2Iso(Volume, FileName);
+        }
+        
+        public event ProgressDelegate Progress;
 
-		public string Name {
-			get {
-				return "ISO";
-			}
-		}
+        public event FinishDelegate Finished;
 
-		public string Extension {
-			get {
-				return "iso";
-			}
-		}
+        public event AbortDelegate Abort;
 
-		public string Description {
-			get {
-				return "CD image with virtual files";
-			}
-		}
+        public override string ToString() => this.Name;
 
-		public TreeNode Volume {
-			get {
-				return m_volume;
-			}
-			set {
-				m_volume = value;
-			}
-		}
-
-		public string FileName {
-			get {
-				return m_fileName;
-			}
-			set {
-				m_fileName = value;
-			}
-		}
-
-		public void DoExport() {
-			if ( m_volume == null || m_fileName == null ) {
-				return;
-			}
-
-			m_creator.Tree2Iso( m_volume, m_fileName );
-		}
-
-		public void DoExport( BER.CDCat.Export.TreeNode volume, string fileName ) {
-			m_volume = volume;
-			m_fileName = fileName;
-			m_creator.Tree2Iso( m_volume, m_fileName );
-		}
-
-		#endregion
-
-		#region Events
-
-		public event ProgressDelegate Progress;
-
-		public event FinishDelegate Finished;
-
-		public event AbortDelegate Abort;
-
-		#endregion
-
-		#region Override
-
-		public override string ToString() {
-			return this.Name;
-		}
-
-		#endregion
-	}
+    }
 }

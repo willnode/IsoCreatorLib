@@ -2,135 +2,76 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BER.CDCat.Export {
-	public class FinishEventArgs : System.EventArgs {
-		private string m_message;
+namespace BER.CDCat.Export
+{
+    public class FinishEventArgs : EventArgs
+    {
 
-		public FinishEventArgs( string message ) {
-			m_message = message;
-		}
+        public FinishEventArgs(string message)
+        {
+            Message = message;
+        }
 
-		public string Message {
-			get {
-				return m_message;
-			}
-			set {
-				m_message = value;
-			}
-		}
-	}
+        public string Message { get; set; }
+    }
 
-	public class ProgressEventArgs : System.EventArgs {
-		private int m_current = -1;
-		private int m_maximum = -1;
-		private string m_action = null;
+    public class ProgressEventArgs : System.EventArgs
+    {
 
-		public ProgressEventArgs( int current ) {
-			m_current = current;
-		}
+        public ProgressEventArgs(int current = -1, int maximum = -1, string action = null)
+        {
+            Action = action;
+            Current = current;
+            Maximum = maximum;
+        }
 
-		public ProgressEventArgs( int current, int maximum ) {
-			m_current = current;
-			m_maximum = maximum;
-		}
+        public int Current { get; set; }
 
-		public ProgressEventArgs( string action, int current, int maximum ) {
-			m_action = action;
-			m_current = current;
-			m_maximum = maximum;
-		}
+        public int Maximum { get; set; }
 
-		public int Current {
-			get {
-				return m_current;
-			}
-			set {
-				m_current = value;
-			}
-		}
+        public string Action { get; set; }
 
-		public int Maximum {
-			get {
-				return m_maximum;
-			}
-			set {
-				m_maximum = value;
-			}
-		}
+    }
 
-		public string Action {
-			get {
-				return m_action;
-			}
-			set {
-				m_action = value;
-			}
-		}
-	}
+    public class AbortEventArgs : System.EventArgs
+    {
 
-	public class AbortEventArgs : System.EventArgs {
-		private string m_message;
+        public AbortEventArgs(string message)
+        {
+            Message = message;
+        }
 
-		public AbortEventArgs( string message ) {
-			m_message = message;
-		}
+        public string Message { get; set; }
+    }
 
-		public string Message {
-			get {
-				return m_message;
-			}
-			set {
-				m_message = value;
-			}
-		}
-	}
+    public delegate void FinishDelegate(object sender, FinishEventArgs e);
 
-	public delegate void FinishDelegate( object sender, FinishEventArgs e );
-	public delegate void ProgressDelegate( object sender, ProgressEventArgs e );
-	public delegate void AbortDelegate( object sender, AbortEventArgs e );
+    public delegate void ProgressDelegate(object sender, ProgressEventArgs e);
 
-	public interface IExportPlugin {
+    public delegate void AbortDelegate(object sender, AbortEventArgs e);
 
-		#region Events
+    public interface IExportPlugin
+    {
 
-		event ProgressDelegate Progress;
-		event FinishDelegate Finished;
-		event AbortDelegate Abort;
+        event ProgressDelegate Progress;
 
-		#endregion
+        event FinishDelegate Finished;
 
-		#region Properties
+        event AbortDelegate Abort;
 
-		string ID {
-			get;
-		}
+        string ID { get; }
 
-		string Description {
-			get;
-		}
+        string Description { get; }
 
-		string Extension {
-			get;
-		}
+        string Extension { get; }
 
-		BER.CDCat.Export.TreeNode Volume {
-			get;
-			set;
-		}
+        TreeNode Volume { get; set; }
 
-		string FileName {
-			get;
-			set;
-		}
+        string FileName { get; set; }
 
-		#endregion
+        void DoExport(TreeNode volume, string volumeDescription);
 
-		#region Methods
+        void DoExport();
 
-		void DoExport( TreeNode volume, string volumeDescription );
-
-		void DoExport();
-
-		#endregion
-	}
+    }
 }

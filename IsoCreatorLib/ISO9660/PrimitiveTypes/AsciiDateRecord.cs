@@ -1,35 +1,50 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ISO9660.PrimitiveTypes {
-	internal class AsciiDateRecord {
-		// field													contents
-		// --------													---------------------------------------------------------
-		public byte[] Year = new byte[4] { 48, 48, 48, 48 };		// year, as four ASCII digits
+namespace ISO9660.PrimitiveTypes
+{
+    internal class AsciiDateRecord
+    {
+        /// <summary>
+        /// year, as four ASCII digits
+        /// </summary>
+        public byte[] Year = { 48, 48, 48, 48 };
 
-		public byte[] Month = new byte[2] { 48, 48 };				/* month, as two ASCII digits, where
-	                                                                 * 01=January, 02=February, etc.
-	                                                                 */
+        /// <summary>
+        /// month, as two ASCII digits, where 01=January, 02=February, etc.
+        /// </summary>
+        public byte[] Month = { 48, 48 };
 
-		public byte[] DayOfMonth = new byte[2] { 48, 48 };			/* day of month, as two ASCII digits, in the range
-	                                                                 * from 01 to 31
-	                                                                 */
+        /// <summary>
+        /// day of month, as two ASCII digits, in the range
+        /// from 01 to 31
+        /// </summary>
+        public byte[] DayOfMonth = { 48, 48 };
 
-		public byte[] Hour = new byte[2] { 48, 48 };				// hour, as two ASCII digits, in the range from 00 to 23
+        /// <summary>
+        /// hour, as two ASCII digits, in the range from 00 to 23
+        /// </summary>
+        public byte[] Hour = { 48, 48 };
 
-		public byte[] Minute = new byte[2] { 48, 48 };				// minute, as two ASCII digits, in the range from 00 to 59
+        /// <summary>
+        /// minute, as two ASCII digits, in the range from 00 to 59
+        /// </summary>
+        public byte[] Minute = { 48, 48 };
 
-		public byte[] Second = new byte[2] { 48, 48 };				// second, as two ASCII digits, in the range from 00 to 59
+        /// <summary>
+        /// second, as two ASCII digits, in the range from 00 to 59
+        /// </summary>
+        public byte[] Second = { 48, 48 };
 
-		public byte[] HundredthsOfSecond = new byte[2] { 48, 48 };	/* hundredths of a second, as two ASCII digits, in the range
-	                                                                 * from 00 to 99
-	                                                                 */
+        /// <summary>
+        /// hundredths of a second, as two ASCII digits, in the range from 00 to 99
+        /// </summary>
+        public byte[] HundredthsOfSecond = { 48, 48 };
 
-		public sbyte TimeZone;										/* offset from Greenwich Mean Time, in 15-minute intervals,
-	                                                                 * as a twos complement signed number, positive for time
-	                                                                 * zones east of Greenwich, and negative for time zones
-	                                                                 * west of Greenwich
-	                                                                 */
-	}
+        /// <summary>
+        /// offset from Greenwich Mean Time, in 15-minute intervals,
+        /// as a twos complement signed number, positive for time
+        /// zones east of Greenwich, and negative for time zones
+        /// west of Greenwich
+        /// </summary>
+        public sbyte TimeZone;
+    }
 }

@@ -5,7 +5,7 @@ using System.IO;
 using ISO9660.PrimitiveTypes;
 using ISO9660.Enums;
 
-namespace IsoCreator.IsoWrappers {
+namespace IsoCreatorLib.IsoWrappers {
 
 	/// <summary>
 	/// Wrapper for ISO9660.PrimitiveTypes.DirectoryRecord

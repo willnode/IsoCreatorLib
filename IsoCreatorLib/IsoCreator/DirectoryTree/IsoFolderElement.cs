@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using BER.CDCat.Export;
 
-namespace IsoCreator.DirectoryTree {
+namespace IsoCreatorLib.DirectoryTree {
 
 	/// <summary>
 	/// Base class for all folder elements (files and subfolders).

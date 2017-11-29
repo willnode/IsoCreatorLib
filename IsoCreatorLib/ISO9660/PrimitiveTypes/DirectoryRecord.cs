@@ -1,23 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using IsoCreator;
+using IsoCreatorLib;
 
 namespace ISO9660.PrimitiveTypes {
 	internal class DirectoryRecord {
-		// field									contents
-		// ------------------------------			---------------------------------------------------------
-		// [1]
-		public byte Length = IsoAlgorithm.DefaultDirectoryRecordLength;
-													// 34, the number of bytes in the record (which must be even)
 
-		// [2]
-		public byte ExtendedAttributeLength = 0;	// always 0 in DOS [number of sectors in extended attribute record]
+        // [1]
+        /// <summary>
+        /// 34, the number of bytes in the record (which must be even)
+        /// </summary>
+        public byte Length = IsoAlgorithm.DefaultDirectoryRecordLength;
 
-		// [3-10]
-		public UInt64 ExtentLocation;				/* number of the first sector of file data or directory
-	                                                 * (zero for an empty file), as a both endian double word
-	                                                 */
+        // [2]
+        /// <summary>
+        /// always 0 in DOS [number of sectors in extended attribute record]
+        /// </summary>
+        public byte ExtendedAttributeLength = 0;
+
+        // [3-10]
+        /// <summary>
+        /// number of the first sector of file data or directory
+        /// (zero for an empty file), as a both endian double word
+        /// </summary>
+        public UInt64 ExtentLocation;				
 
 		// [11-18]
 		public UInt64 DataLength;					/* number of bytes of file data or length of directory,
