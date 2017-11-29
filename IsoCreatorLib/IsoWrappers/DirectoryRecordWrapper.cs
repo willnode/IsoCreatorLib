@@ -144,11 +144,11 @@ namespace IsoCreatorLib.IsoWrappers {
 		#region Constructors
 
 		public DirectoryRecordWrapper( DateTime date, bool isDirectory, string name ) {
-			this.SetDirectoryRecord( 0, 0, date, isDirectory, name );
+            SetDirectoryRecord( 0, 0, date, isDirectory, name );
 		}
 
 		public DirectoryRecordWrapper( UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name ) {
-			this.SetDirectoryRecord( extentLocation, dataLength, date, isDirectory, name );
+            SetDirectoryRecord( extentLocation, dataLength, date, isDirectory, name );
 		}
 
 		public DirectoryRecordWrapper( DirectoryRecord directoryRecord ) {
@@ -192,7 +192,7 @@ namespace IsoCreatorLib.IsoWrappers {
 				  fileIdentifier.Length != 1 || fileIdentifier[0] > 1 ) ) {
 
 				m_volumeDescriptorType = VolumeType.Primary;
-				this.VolumeDescriptorType = VolumeType.Suplementary;
+                VolumeDescriptorType = VolumeType.Suplementary;
 			}
 		}
 
@@ -213,7 +213,7 @@ namespace IsoCreatorLib.IsoWrappers {
 				}
 			}
 
-			this.SetDirectoryRecord(
+            SetDirectoryRecord(
 					IsoAlgorithm.BothEndian( extentLocation ),
 					IsoAlgorithm.BothEndian( dataLength ),
 					m_date.BinaryDateRecord,
@@ -224,7 +224,7 @@ namespace IsoCreatorLib.IsoWrappers {
 		}
 
 		public void SetDirectoryRecord( UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name ) {
-			this.SetDirectoryRecord( extentLocation, dataLength, date, (sbyte)8, isDirectory, name );
+            SetDirectoryRecord( extentLocation, dataLength, date, (sbyte)8, isDirectory, name );
 		}
 
 		#endregion

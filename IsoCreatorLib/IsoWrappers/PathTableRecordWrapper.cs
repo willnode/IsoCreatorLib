@@ -23,7 +23,7 @@ namespace IsoCreatorLib.IsoWrappers {
 		}
 
 		public PathTableRecordWrapper( UInt32 extentLocation, UInt16 parentNumber, string name ) {
-			this.SetPathTableRecord( extentLocation, parentNumber, name );
+            SetPathTableRecord( extentLocation, parentNumber, name );
 		}
 
 		#endregion
@@ -154,7 +154,7 @@ namespace IsoCreatorLib.IsoWrappers {
 
 				if ( m_volumeDescriptorType == VolumeType.Suplementary ) {
 					m_volumeDescriptorType = VolumeType.Primary;
-					this.VolumeDescriptorType = VolumeType.Suplementary;
+                    VolumeDescriptorType = VolumeType.Suplementary;
 				}
 			}
 		}
@@ -187,7 +187,7 @@ namespace IsoCreatorLib.IsoWrappers {
 
 			if ( m_volumeDescriptorType == VolumeType.Suplementary && ( identifier.Length>1 || identifier[0]!=0 ) ) {
 				m_volumeDescriptorType = VolumeType.Primary;
-				this.VolumeDescriptorType = VolumeType.Suplementary;
+                VolumeDescriptorType = VolumeType.Suplementary;
 			}
 		}
 
@@ -205,7 +205,7 @@ namespace IsoCreatorLib.IsoWrappers {
 				identifier = new byte[1] { 0 };
 			}
 
-			this.SetPathTableRecord( extentLocation, parentNumber, identifier );
+            SetPathTableRecord( extentLocation, parentNumber, identifier );
 		}
 
 		#endregion

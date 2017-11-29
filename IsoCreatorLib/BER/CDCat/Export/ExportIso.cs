@@ -40,7 +40,7 @@ namespace BER.CDCat.Export
             Creator.Tree2Iso(Volume, FileName);
         }
 
-        public void DoExport(BER.CDCat.Export.TreeNode volume, string fileName)
+        public void DoExport(TreeNode volume, string fileName)
         {
             Volume = volume;
             FileName = fileName;
@@ -53,7 +53,7 @@ namespace BER.CDCat.Export
 
         public event AbortDelegate Abort;
 
-        public override string ToString() => this.Name;
+        public override string ToString() => Name;
 
     }
 }

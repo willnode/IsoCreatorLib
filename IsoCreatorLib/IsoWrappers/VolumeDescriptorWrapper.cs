@@ -24,13 +24,13 @@ namespace IsoCreatorLib.IsoWrappers {
 		#region Constructors
 
 		public VolumeDescriptorWrapper( string volumeName, DirectoryRecordWrapper root, DateTime creationDate, DateTime modificationDate ) {
-			this.SetVolumeDescriptor( volumeName, 0, 0, 0, 0, root, creationDate, modificationDate, 8 );
+            SetVolumeDescriptor( volumeName, 0, 0, 0, 0, root, creationDate, modificationDate, 8 );
 		}
 
 		public VolumeDescriptorWrapper( string volumeName, UInt32 volumeSpaceSize, UInt32 pathTableSize, UInt32 typeLPathTable, UInt32 typeMPathTable,
 									DirectoryRecordWrapper root, DateTime creationDate, DateTime modificationDate, sbyte timeZone ) {
 
-			this.SetVolumeDescriptor( volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable, root, creationDate,
+            SetVolumeDescriptor( volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable, root, creationDate,
 									  modificationDate, timeZone );
 		}
 
@@ -195,7 +195,7 @@ namespace IsoCreatorLib.IsoWrappers {
 			abstractFileId.CopyTo( m_volumeDescriptor.AbstractFileId, 0 );
 			bibliographicFieldId.CopyTo( m_volumeDescriptor.BibliographicFileId, 0 );
 
-			this.SetVolumeDescriptor( systemId, volumeId, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable,
+            SetVolumeDescriptor( systemId, volumeId, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable,
 									  rootDirRecord, creationDate, modificationDate, expirationDate, effectiveDate );
 		}
 
@@ -234,7 +234,7 @@ namespace IsoCreatorLib.IsoWrappers {
 
 			DateWrapper bufferDate = new DateWrapper( IsoAlgorithm.NoDate );
 
-			this.SetVolumeDescriptor( lSystemId, lVolumeId, lVolumeSpaceSize, lPathTableSize, typeLPathTable, lTypeMPathTable,
+            SetVolumeDescriptor( lSystemId, lVolumeId, lVolumeSpaceSize, lPathTableSize, typeLPathTable, lTypeMPathTable,
 									  rootDir.Record, lCreationDate.AsciiDateRecord, lModificationDate.AsciiDateRecord,
 									  bufferDate.AsciiDateRecord, bufferDate.AsciiDateRecord );
 		}
@@ -242,7 +242,7 @@ namespace IsoCreatorLib.IsoWrappers {
 		public void SetVolumeDescriptor( string volumeName, UInt32 volumeSpaceSize, UInt32 pathTableSize, UInt32 typeLPathTable,
 										 UInt32 typeMPathTable, DirectoryRecordWrapper root, DateTime creationDate, DateTime modificationDate, sbyte timeZone ) {
 
-			this.SetVolumeDescriptor( " ", volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable,
+            SetVolumeDescriptor( " ", volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable,
 									  root, creationDate, modificationDate, timeZone );
 		}
 
@@ -284,7 +284,7 @@ namespace IsoCreatorLib.IsoWrappers {
 			writer.Write( m_volumeDescriptor.TypeMPathTable );
 			writer.Write( m_volumeDescriptor.OptionalTypeMPathTable );
 
-			m_rootDirRecord.VolumeDescriptorType = this.VolumeDescriptorType;
+			m_rootDirRecord.VolumeDescriptorType = VolumeDescriptorType;
 			m_rootDirRecord.Write( writer );
 
 			writer.Write( m_volumeDescriptor.VolumeSetId );
