@@ -1,16 +1,16 @@
-using System;
-using System.IO;
-using System.Collections;
 using BER.CDCat.Export;
 using ISO9660.Enums;
 using IsoCreatorLib.DirectoryTree;
+using System;
+using System.Collections;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
 
 namespace IsoCreatorLib
 {
     public partial class IsoCreator
     {
-
         #region Folder to ISO
 
         /// <summary>
@@ -21,12 +21,9 @@ namespace IsoCreatorLib
         /// <param name="volumeName">The name of the volume created.</param>
         private void Folder2Iso(DirectoryInfo rootDirectoryInfo, BinaryWriter writer, string volumeName)
         {
-
-            ArrayList dirList;
-            IsoDirectory[] dirArray;
-
             OnProgress("Initializing ISO root directory...", 0, 1);
 
+            ArrayList dirList; IsoDirectory[] dirArray;
             IsoDirectory root = new IsoDirectory(rootDirectoryInfo, 1, "0", Progress);
 
             //
@@ -39,12 +36,10 @@ namespace IsoCreatorLib
 
             // Set all extents corresponding to the primary volume descriptor;
             // Memorize the SORTED directories in the dirList list.
-            // The first extent (corresponding to the root) should be at the 19th sector 
-            // (which is the first available sector: 0-15 are empty and the next 3 (16-18) 
+            // The first extent (corresponding to the root) should be at the 19th sector
+            // (which is the first available sector: 0-15 are empty and the next 3 (16-18)
             // are occupied by the volume descriptors).
             IsoDirectory.SetExtent1(dirList, 0, 19);
-
-            OnProgress(1);
 
             OnProgress("Calculating directory numbers...", 0, 1);
 
@@ -53,12 +48,10 @@ namespace IsoCreatorLib
 
             SetDirectoryNumbers(dirArray);         // Set the directory numbers, used in the path tables.
 
-            OnProgress(1);
-
             OnProgress("Preparing first set of path tables...", 0, 2);
 
-            // Create a memory stream where to temporarily save the path tables. 
-            // (We can't write them directly to the file, because we first have to write - by convention - 
+            // Create a memory stream where to temporarily save the path tables.
+            // (We can't write them directly to the file, because we first have to write - by convention -
             // the directories. For now, we cannot do that, since we don't know the files' extents.
             // Those will be calculated later, when we know the actual size of the path tables, because
             // the files come at the end of the file, after the path tables.)
@@ -80,8 +73,6 @@ namespace IsoCreatorLib
 
             UInt32 pathTableSize1 = (UInt32)WritePathTable(memoryWriter1, dirArray, Endian.BigEndian, VolumeType.Primary);
 
-            OnProgress(2);
-
             //
             // end
             //
@@ -101,8 +92,6 @@ namespace IsoCreatorLib
             dirArray = new IsoDirectory[dirList.Count];
             dirList.ToArray().CopyTo(dirArray, 0);
 
-            OnProgress(1);
-
             OnProgress("Preparing second set of path tables...", 0, 2);
 
             MemoryStream memory2 = new MemoryStream();
@@ -119,15 +108,13 @@ namespace IsoCreatorLib
 
             UInt32 pathTableSize2 = (UInt32)WritePathTable(memoryWriter2, dirArray, Endian.BigEndian, VolumeType.Suplementary);
 
-            OnProgress(2);
-
             //
             // end
             //
 
             OnProgress("Initializing...", 0, 1);
 
-            // Now that we know the extents and sizes of all directories and path tables, 
+            // Now that we know the extents and sizes of all directories and path tables,
             // all that remains is to calculate files extent:
             currentExtent = typeLPathTable2 + (UInt32)(memory2.Length) / IsoAlgorithm.SectorSize;
             root.SetFilesExtent(ref currentExtent);
@@ -151,8 +138,6 @@ namespace IsoCreatorLib
             memory2.Close();
             memoryWriter1.Close();
             memoryWriter2.Close();
-
-            OnProgress(1);
 
             //
             // Now all we have to do is to write all information to the ISO:
@@ -213,16 +198,18 @@ namespace IsoCreatorLib
 
                 try
                 {
-                    Folder2Iso(rootDirectoryInfo, writer, volumeName); 
+                    Folder2Iso(rootDirectoryInfo, writer, volumeName);
                     OnFinished("ISO writing process finished succesfully");
                 }
-                catch (Exception ex) { throw ex; }
-
-                writer.Close();
-                isoFileStream.Close();
-
+                catch (Exception ex)
+                { throw ex; }
+                finally
+                {
+                    writer.Close();
+                    isoFileStream.Close();
+                }
             }
-            catch (System.Threading.ThreadAbortException ex)
+            catch (ThreadAbortException ex)
             {
                 Debug.WriteLine(ex.Message);
                 OnAbort("Aborted by user");
@@ -243,7 +230,7 @@ namespace IsoCreatorLib
                 Folder2Iso(args.FolderPath, args.IsoPath, args.VolumeName);
         }
 
-        #endregion
+        #endregion Folder to ISO
 
         #region Tree to ISO
 
@@ -251,15 +238,14 @@ namespace IsoCreatorLib
         /// Writes an ISO with the contains of the tree given as a parameter.
         /// This is a "virtual" ISO, which means that you will find on it only a directory structure;
         /// files will actually not ocupy any space on it. (For a better picture of what happens here,
-        /// run the VirtualIsoCreator form in Forms namespace. There is a demo. Also, if you have CDCat 
-        /// installed on your PC, you should know by now the effect of the method below. Within CDCat, 
+        /// run the VirtualIsoCreator form in Forms namespace. There is a demo. Also, if you have CDCat
+        /// installed on your PC, you should know by now the effect of the method below. Within CDCat,
         /// this method is used through the ExportIso class in BER.CDCat.Export namespace)
         /// </summary>
         /// <param name="volume">The directory structure to be turned into an iso.</param>
         /// <param name="writer">A binary writer to write the data.</param>
         private void Tree2Iso(TreeNode volume, BinaryWriter writer)
         {
-
             ArrayList dirList;
             IsoDirectory[] dirArray;
 
@@ -277,12 +263,10 @@ namespace IsoCreatorLib
 
             // Set all extents corresponding to the primary volume descriptor;
             // Memorize the SORTED directories in the dirList list.
-            // The first extent (corresponding to the root) should be at the 19th sector 
-            // (which is the first available sector: 0-15 are empty and the next 3 (16-18) 
+            // The first extent (corresponding to the root) should be at the 19th sector
+            // (which is the first available sector: 0-15 are empty and the next 3 (16-18)
             // are occupied by the volume descriptors).
             IsoDirectory.SetExtent1(dirList, 0, 19);
-
-            OnProgress(1);
 
             OnProgress("Calculating directory numbers...", 0, 1);
 
@@ -291,12 +275,10 @@ namespace IsoCreatorLib
 
             SetDirectoryNumbers(dirArray);         // Set the directory numbers, used in the path tables.
 
-            OnProgress(1);
-
             OnProgress("Preparing first set of path tables...", 0, 2);
 
-            // Create a memory stream where to temporarily save the path tables. 
-            // (We can't write them directly to the file, because we first have to write - by convention - 
+            // Create a memory stream where to temporarily save the path tables.
+            // (We can't write them directly to the file, because we first have to write - by convention -
             // the directories. For now, we cannot do that, since we don't know the files' extents.
             // Those will be calculated later, when we know the actual size of the path tables, because
             // the files come at the end of the file, after the path tables.)
@@ -318,8 +300,6 @@ namespace IsoCreatorLib
 
             UInt32 pathTableSize1 = (UInt32)WritePathTable(memoryWriter1, dirArray, Endian.BigEndian, VolumeType.Primary);
 
-            OnProgress(2);
-
             //
             // end
             //
@@ -339,8 +319,6 @@ namespace IsoCreatorLib
             dirArray = new IsoDirectory[dirList.Count];
             dirList.ToArray().CopyTo(dirArray, 0);
 
-            OnProgress(1);
-
             OnProgress("Preparing second set of path tables...", 0, 2);
 
             MemoryStream memory2 = new MemoryStream();
@@ -357,15 +335,13 @@ namespace IsoCreatorLib
 
             UInt32 pathTableSize2 = (UInt32)WritePathTable(memoryWriter2, dirArray, Endian.BigEndian, VolumeType.Suplementary);
 
-            OnProgress(2);
-
             //
             // end
             //
 
             OnProgress("Initializing...", 0, 1);
 
-            // Now that we know the extents and sizes of all directories and path tables, 
+            // Now that we know the extents and sizes of all directories and path tables,
             // all that remains is to calculate files extent. However, this being a virtual ISO,
             // it won't memorize real files, but only images of files, which will apear to have a real size,
             // but in fact, won't occupy any more space. So we will leave all the files' extents null (0).
@@ -388,8 +364,6 @@ namespace IsoCreatorLib
             memory2.Close();
             memoryWriter1.Close();
             memoryWriter2.Close();
-
-            OnProgress(1);
 
             //
             // Now all we have to do is to write all information to the ISO:
@@ -447,22 +421,21 @@ namespace IsoCreatorLib
                 try
                 {
                     Tree2Iso(volume, writer);
-
-                    writer.Close();
-                    isoFileStream.Close();
-
                     OnFinished("ISO writing process finished succesfully");
                 }
                 catch (Exception ex)
                 {
-                    writer.Close();
-                    isoFileStream.Close();
                     throw ex;
                 }
+                finally
+                {
+                    writer.Close();
+                    isoFileStream.Close();
+                }
             }
-            catch (System.Threading.ThreadAbortException ex)
+            catch (ThreadAbortException ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
                 OnAbort("Aborted by user");
             }
             catch (Exception ex)
@@ -477,16 +450,11 @@ namespace IsoCreatorLib
         /// <param name="data">An IsoCreatorTreeArgs object.</param>
         public void Tree2Iso(object data)
         {
-            if (data.GetType() != typeof(IsoCreatorTreeArgs))
-            {
-                return;
-            }
-
-            IsoCreatorTreeArgs args = (IsoCreatorTreeArgs)data;
-            Tree2Iso(args.Volume, args.IsoPath);
+            if (data is IsoCreatorTreeArgs args)
+                Tree2Iso(args.Volume, args.IsoPath);
         }
 
-        #endregion
+        #endregion Tree to ISO
 
         #region Events
 
@@ -506,6 +474,6 @@ namespace IsoCreatorLib
 
         private void OnAbort(string message) => Abort?.Invoke(this, new AbortEventArgs(message));
 
-        #endregion
+        #endregion Events
     }
 }

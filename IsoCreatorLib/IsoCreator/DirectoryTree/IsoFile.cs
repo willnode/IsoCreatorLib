@@ -1,21 +1,17 @@
+using BER.CDCat.Export;
 using System;
 using System.IO;
-using BER.CDCat.Export;
 
 namespace IsoCreatorLib.DirectoryTree
 {
-
     /// <summary>
     /// The file (folder element).
     /// </summary>
     internal class IsoFile : IsoFolderElement
     {
-
-
         private string m_fullPath;
         private UInt32 m_size;
         private UInt32 m_extent;
-
 
         public IsoFile(FileInfo file, string childNumber) : base(file, false, childNumber)
         {
@@ -28,7 +24,7 @@ namespace IsoCreatorLib.DirectoryTree
             m_fullPath = file.FullName;
             m_size = file.Length;
         }
-        
+
         public override UInt32 Extent1
         {
             get => m_extent;
@@ -47,7 +43,6 @@ namespace IsoCreatorLib.DirectoryTree
 
         public override bool IsDirectory => false;
 
-
         public void Write(BinaryWriter writer, ProgressDelegate Progress)
         {
             if (m_extent == 0 || m_size == 0) return;
@@ -55,7 +50,7 @@ namespace IsoCreatorLib.DirectoryTree
             FileStream source = new FileStream(m_fullPath, FileMode.Open, FileAccess.Read);
             BinaryReader reader = new BinaryReader(source);
 
-            // The write buffer is 1MB long. I haven't given too much study into this particular field, so 
+            // The write buffer is 1MB long. I haven't given too much study into this particular field, so
             // feel free to change according two whatever writing speed is optimal.
             int bucket = (int)IsoAlgorithm.SectorSize * 512; // 1 MB
             byte[] buffer = new byte[bucket];
@@ -76,12 +71,10 @@ namespace IsoCreatorLib.DirectoryTree
                         writer.Write(new byte[IsoAlgorithm.SectorSize - (bytesRead % IsoAlgorithm.SectorSize)]);
                     break;
                 }
-
             }
 
             reader.Close();
             source.Close();
         }
-
     }
 }

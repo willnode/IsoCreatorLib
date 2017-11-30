@@ -8,20 +8,13 @@ namespace IsoCreatorLib.DirectoryTree
     /// </summary>
     internal class FolderElementList : CollectionBase
     {
-
         public class DirEntryComparer : IComparer
         {
-            public int Compare(object x, object y)
-            {
-                string nameX = ((IsoFolderElement)x).LongName;
-                string nameY = ((IsoFolderElement)y).LongName;
-
-                return String.Compare(nameX, nameY, false);
-            }
+            public int Compare(object x, object y) => 
+                String.Compare(((IsoFolderElement)x).LongName, ((IsoFolderElement)y).LongName, false);
         }
 
         public void Add(IsoFolderElement value) => InnerList.Add(value);
-
 
         public void Sort() => InnerList.Sort(new DirEntryComparer());
 

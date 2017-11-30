@@ -5,7 +5,6 @@ namespace BER.CDCat.Export
 {
     public class TreeNode
     {
-
         public TreeNodeCollection Files { get; } = new TreeNodeCollection();
 
         public TreeNodeCollection Directories { get; } = new TreeNodeCollection();
@@ -22,9 +21,9 @@ namespace BER.CDCat.Export
 
         public string FullName { get; set; } = "";
 
-        public TreeNode[] GetFiles() { return Files.ToArray(); }
+        public TreeNode[] GetFiles() => Files.ToArray();
 
-        public TreeNode[] GetDirectories() { return Directories.ToArray(); }
+        public TreeNode[] GetDirectories() => Directories.ToArray();
 
         public TreeNode[] GetAllChildren()
         {

@@ -1,11 +1,10 @@
+using ISO9660.Enums;
+using ISO9660.PrimitiveTypes;
 using System;
 using System.IO;
-using ISO9660.PrimitiveTypes;
-using ISO9660.Enums;
 
 namespace IsoCreatorLib.IsoWrappers
 {
-
     /// <summary>
     /// Wrapper for ISO9660.PrimitiveTypes.DirectoryRecord
     /// </summary>
@@ -17,7 +16,7 @@ namespace IsoCreatorLib.IsoWrappers
         private DateWrapper m_date;
         private VolumeType m_volumeDescriptorType = VolumeType.Primary;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -81,7 +80,6 @@ namespace IsoCreatorLib.IsoWrappers
                     (m_volumeDescriptorType == VolumeType.Suplementary ||
                     value == VolumeType.Suplementary) && m_record != null)
                 {
-
                     if (value == VolumeType.Suplementary)
                     {
                         m_record.FileIdentifier = IsoAlgorithm.AsciiToUnicode(m_record.FileIdentifier);
@@ -118,14 +116,14 @@ namespace IsoCreatorLib.IsoWrappers
 
         public byte Length => m_record.Length;
 
-        #endregion
+        #endregion Properties
 
         #region Constructors
 
-        public DirectoryRecordWrapper(DateTime date, bool isDirectory, string name) 
+        public DirectoryRecordWrapper(DateTime date, bool isDirectory, string name)
             => SetDirectoryRecord(0, 0, date, isDirectory, name);
 
-        public DirectoryRecordWrapper(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name) 
+        public DirectoryRecordWrapper(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name)
             => SetDirectoryRecord(extentLocation, dataLength, date, isDirectory, name);
 
         public DirectoryRecordWrapper(DirectoryRecord directoryRecord)
@@ -134,7 +132,7 @@ namespace IsoCreatorLib.IsoWrappers
             m_date = new DateWrapper(directoryRecord.Date);
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Set Methods
 
@@ -199,7 +197,7 @@ namespace IsoCreatorLib.IsoWrappers
         public void SetDirectoryRecord(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name)
             => SetDirectoryRecord(extentLocation, dataLength, date, 8, isDirectory, name);
 
-        #endregion
+        #endregion Set Methods
 
         #region I/O Methods
 
@@ -228,6 +226,6 @@ namespace IsoCreatorLib.IsoWrappers
             return m_record.Length;
         }
 
-        #endregion
+        #endregion I/O Methods
     }
 }

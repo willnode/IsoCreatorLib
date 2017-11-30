@@ -1,17 +1,14 @@
+using BER.CDCat.Export;
 using System;
 using System.IO;
-using BER.CDCat.Export;
 
 namespace IsoCreatorLib.DirectoryTree
 {
-
     /// <summary>
     /// Base class for all folder elements (files and subfolders).
     /// </summary>
     internal abstract class IsoFolderElement
     {
-
-
         public IsoFolderElement(FileSystemInfo folderElement, bool isRoot, string childNumber)
         {
             Date = folderElement.CreationTime;
@@ -40,7 +37,6 @@ namespace IsoCreatorLib.DirectoryTree
             {
                 LongName = LongName.Substring(0, IsoAlgorithm.FileNameMaxLength - childNumber.Length) + childNumber;
             }
-
         }
 
         public IsoFolderElement(TreeNode folderElement, bool isRoot, string childNumber)
@@ -73,7 +69,6 @@ namespace IsoCreatorLib.DirectoryTree
             }
         }
 
-
         public abstract UInt32 Extent1 { get; set; }
 
         public abstract UInt32 Extent2 { get; set; }
@@ -87,7 +82,7 @@ namespace IsoCreatorLib.DirectoryTree
         public DateTime Date { get; }
 
         /// <summary>
-        /// The shortIdent is used for the DOS short-ascii-name. I haven't given too much 
+        /// The shortIdent is used for the DOS short-ascii-name. I haven't given too much
         /// effort into making it right. It isn't of much use these days.
         /// </summary>
 		public string ShortName { get; set; }
@@ -96,6 +91,5 @@ namespace IsoCreatorLib.DirectoryTree
         /// The original name. (unicode n stuff)
         /// </summary>
 		public string LongName { get; }
-        
     }
 }

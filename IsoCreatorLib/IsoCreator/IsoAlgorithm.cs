@@ -1,11 +1,11 @@
 using System;
 using System.IO;
 using System.Text;
+
 namespace IsoCreatorLib
 {
     internal static class IsoAlgorithm
     {
-
         #region Constants
 
         public static UInt32 SectorSize => 0x800;
@@ -40,7 +40,7 @@ namespace IsoCreatorLib
 
         public static int FileNameMaxLength => 101; // 101*2+33+1 = 236
 
-        #endregion
+        #endregion Constants
 
         #region Helper Methods
 
@@ -143,13 +143,12 @@ namespace IsoCreatorLib
 
         public static byte[] AsciiToUnicode(string asciiText, int size)
         {
-
             byte[] buffer = AsciiToUnicode(asciiText);
             byte[] result = MemSet(size / 2, UnicodeBlank);
 
             if (size % 2 == 1)
                 Array.Resize(ref result, result.Length + 1);
-          
+
             Array.Copy(buffer, result, Math.Min(size, buffer.Length));
 
             if (buffer.Length < size - 2)
@@ -180,7 +179,6 @@ namespace IsoCreatorLib
 
         public static byte[] AsciiToUnicode(byte[] asciiText, int size)
         {
-
             byte[] buffer = AsciiToUnicode(asciiText);
             byte[] result = MemSet(size / 2, UnicodeBlank);
 
@@ -218,7 +216,7 @@ namespace IsoCreatorLib
 
             for (int i = 0; i < result.Length; i++)
                 result[i] = (byte)text[i];
-            
+
             return result;
         }
 
@@ -238,7 +236,7 @@ namespace IsoCreatorLib
 
             for (int i = 0; i < text.Length; i++)
                 text[i] = (char)array[i];
-            
+
             return new string(text);
         }
 
@@ -273,6 +271,6 @@ namespace IsoCreatorLib
         /// <returns></returns>
         public static UInt16 ChangeEndian(UInt16 value) => (UInt16)((value >> 8) | (UInt16)((value & 0x00FF) << 8));
 
-        #endregion
+        #endregion Helper Methods
     }
 }

@@ -4,7 +4,6 @@ namespace ISO9660.PrimitiveTypes
 {
     internal class PathTableRecord
     {
-
         /// <summary>
         /// N, the identifier length (or 1 for the root directory)
         /// </summary>

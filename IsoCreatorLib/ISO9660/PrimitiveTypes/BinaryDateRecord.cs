@@ -1,9 +1,7 @@
-
 namespace ISO9660.PrimitiveTypes
 {
     internal class BinaryDateRecord
     {
-
         /// <summary>
         /// number of years since 1900
         /// </summary>

@@ -4,14 +4,13 @@ namespace BER.CDCat.Export
 {
     public class FinishEventArgs : EventArgs
     {
-        public FinishEventArgs(string message) { Message = message; }
+        public FinishEventArgs(string message) => Message = message;
 
         public string Message { get; set; }
     }
 
     public class ProgressEventArgs : EventArgs
     {
-
         public ProgressEventArgs(int current = -1, int maximum = -1, string action = null)
         {
             Action = action;
@@ -24,13 +23,11 @@ namespace BER.CDCat.Export
         public int Maximum { get; set; }
 
         public string Action { get; set; }
-
     }
 
     public class AbortEventArgs : EventArgs
     {
-
-        public AbortEventArgs(string message) { Message = message; }
+        public AbortEventArgs(string message) => Message = message;
 
         public string Message { get; set; }
     }
@@ -43,7 +40,6 @@ namespace BER.CDCat.Export
 
     public interface IExportPlugin
     {
-
         event ProgressDelegate Progress;
 
         event FinishDelegate Finished;
@@ -63,6 +59,5 @@ namespace BER.CDCat.Export
         void DoExport(TreeNode volume, string volumeDescription);
 
         void DoExport();
-
     }
 }

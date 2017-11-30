@@ -1,6 +1,6 @@
+using ISO9660.PrimitiveTypes;
 using System;
 using System.IO;
-using ISO9660.PrimitiveTypes;
 
 namespace IsoCreatorLib.IsoWrappers
 {
@@ -12,7 +12,7 @@ namespace IsoCreatorLib.IsoWrappers
         private AsciiDateRecord m_asciiDateRecord;
         private DateTime m_date;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -45,7 +45,7 @@ namespace IsoCreatorLib.IsoWrappers
             set => m_asciiDateRecord.TimeZone = value;
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor(s)
 
@@ -81,7 +81,7 @@ namespace IsoCreatorLib.IsoWrappers
             m_date = new DateTime(1900 + year, month, dayOfMonth, hour, minute, second, millisecond);
         }
 
-        #endregion
+        #endregion Constructor(s)
 
         #region Set Methods
 
@@ -128,7 +128,7 @@ namespace IsoCreatorLib.IsoWrappers
             m_asciiDateRecord.TimeZone = timeZone;
         }
 
-        private void SetAsciiDateRecord(DateTime date, sbyte timeZone) 
+        private void SetAsciiDateRecord(DateTime date, sbyte timeZone)
             => SetAsciiDateRecord(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond / 10, timeZone);
 
         private void SetAsciiDateRecord(DateTime date) => SetAsciiDateRecord(date, 8);
@@ -140,7 +140,7 @@ namespace IsoCreatorLib.IsoWrappers
             SetBinaryDateRecord(m_date);
         }
 
-        #endregion
+        #endregion Set Methods
 
         #region I/O Methods
 
@@ -176,6 +176,6 @@ namespace IsoCreatorLib.IsoWrappers
             return 17;
         }
 
-        #endregion
+        #endregion I/O Methods
     }
 }

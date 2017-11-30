@@ -1,4 +1,3 @@
-
 namespace ISO9660.PrimitiveTypes
 {
     internal class AsciiDateRecord

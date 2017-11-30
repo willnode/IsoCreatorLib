@@ -1,7 +1,7 @@
+using ISO9660.Enums;
+using ISO9660.PrimitiveTypes;
 using System;
 using System.IO;
-using ISO9660.PrimitiveTypes;
-using ISO9660.Enums;
 
 namespace IsoCreatorLib.IsoWrappers
 {
@@ -15,16 +15,18 @@ namespace IsoCreatorLib.IsoWrappers
 
         private VolumeType m_volumeDescriptorType = VolumeType.Primary;
 
-        #endregion
+        #endregion Fields
 
         #region Constructors
 
-        public PathTableRecordWrapper() { }
+        public PathTableRecordWrapper()
+        {
+        }
 
         public PathTableRecordWrapper(UInt32 extentLocation, UInt16 parentNumber, string name)
             => SetPathTableRecord(extentLocation, parentNumber, name);
 
-        #endregion
+        #endregion Constructors
 
         #region Properties
 
@@ -62,8 +64,6 @@ namespace IsoCreatorLib.IsoWrappers
                     (m_volumeDescriptorType == VolumeType.Suplementary ||
                     value == VolumeType.Suplementary))
                 {
-
-
                     switch (value)
                     {
                         case VolumeType.Suplementary:
@@ -89,9 +89,7 @@ namespace IsoCreatorLib.IsoWrappers
                             }
 
                             break;
-
                     }
-
                 }
                 m_volumeDescriptorType = value;
             }
@@ -156,13 +154,12 @@ namespace IsoCreatorLib.IsoWrappers
                         VolumeDescriptorType = VolumeType.Suplementary;
                     }
                 }
-
             }
         }
 
         public byte Length => m_record.Length;
 
-        #endregion
+        #endregion Properties
 
         #region Set Methods
 
@@ -200,7 +197,7 @@ namespace IsoCreatorLib.IsoWrappers
             SetPathTableRecord(extentLocation, parentNumber, identifier);
         }
 
-        #endregion
+        #endregion Set Methods
 
         #region I/O Methods
 
@@ -225,6 +222,6 @@ namespace IsoCreatorLib.IsoWrappers
             return 8 + m_record.Length + (m_record.Length % 2);
         }
 
-        #endregion
+        #endregion I/O Methods
     }
 }

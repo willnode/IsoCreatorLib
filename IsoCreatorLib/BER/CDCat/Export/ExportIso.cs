@@ -2,14 +2,12 @@ using IsoCreatorLib;
 
 namespace BER.CDCat.Export
 {
-
     /// <summary>
     /// This class implements the interface required by CDCat for its export plugins.
     /// It is used only when compiled as external library, and only by CDCat.
     /// </summary>
     public class ExportIso : IExportPlugin
-    {        
-        
+    {
         public ExportIso()
         {
             Creator.Progress += delegate (object sender, ProgressEventArgs e) { Progress?.Invoke(sender, e); };
@@ -43,7 +41,7 @@ namespace BER.CDCat.Export
             FileName = fileName;
             Creator.Tree2Iso(Volume, FileName);
         }
-        
+
         public event ProgressDelegate Progress;
 
         public event FinishDelegate Finished;
@@ -51,6 +49,5 @@ namespace BER.CDCat.Export
         public event AbortDelegate Abort;
 
         public override string ToString() => Name;
-
     }
 }

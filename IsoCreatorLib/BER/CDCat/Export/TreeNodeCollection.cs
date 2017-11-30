@@ -4,7 +4,6 @@ namespace BER.CDCat.Export
 {
     public class TreeNodeCollection : CollectionBase
     {
-
         public int Add(TreeNode node) => InnerList.Add(node);
 
         public void AddRange(TreeNodeCollection collection) => InnerList.AddRange(collection);
@@ -17,7 +16,6 @@ namespace BER.CDCat.Export
             set => InnerList[index] = value;
         }
 
-        public TreeNode[] ToArray() => (TreeNode[]) InnerList.ToArray(typeof(TreeNode));
-
+        public TreeNode[] ToArray() => (TreeNode[])InnerList.ToArray(typeof(TreeNode));
     }
 }

@@ -1,11 +1,10 @@
-using System;
 using IsoCreatorLib;
+using System;
 
 namespace ISO9660.PrimitiveTypes
 {
     internal class DirectoryRecord
     {
-
         // [1]
         /// <summary>
         /// 34, the number of bytes in the record (which must be even)
@@ -35,7 +34,7 @@ namespace ISO9660.PrimitiveTypes
 
         // [19-24]
         /// <summary>
-        /// Details in struct DateRecord		
+        /// Details in struct DateRecord
         /// </summary>
         public BinaryDateRecord Date = new BinaryDateRecord();
 

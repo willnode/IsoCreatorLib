@@ -1,9 +1,10 @@
-namespace ISO9660.Enums {
-
-	internal enum Endian {
-		LittleEndian,
-		BigEndian
-	}
+namespace ISO9660.Enums
+{
+    internal enum Endian
+    {
+        LittleEndian,
+        BigEndian
+    }
 
     /// <summary>
 	/// Describes the volume descriptor type; the numbers are set according to the ISO 9660 standard.
@@ -11,7 +12,7 @@ namespace ISO9660.Enums {
 	internal enum VolumeType
     {
         /// <summary>
-        /// Number 0: shall mean that the Volume Descriptor is a Boot Record 
+        /// Number 0: shall mean that the Volume Descriptor is a Boot Record
         /// (never used in this program... maybe in future distributions).
         /// </summary>
         BootRecord = 0,

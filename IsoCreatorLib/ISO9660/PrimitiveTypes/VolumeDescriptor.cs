@@ -1,11 +1,10 @@
-using System;
 using IsoCreatorLib;
+using System;
 
 namespace ISO9660.PrimitiveTypes
 {
     internal class VolumeDescriptor
     {
-
         // [1]
         /// <summary>
         ///  1, 2, 255
@@ -14,7 +13,7 @@ namespace ISO9660.PrimitiveTypes
 
         // [2-7]
         /// <summary>
-        ///  67, 68, 48, 48, 49 ( that is "CD001" ) and 1, respectively 
+        ///  67, 68, 48, 48, 49 ( that is "CD001" ) and 1, respectively
         ///  (same as Volume Descriptor Set Terminator)
         /// </summary>
         public byte[] StandardIdentifier = new byte[6] { 67, 68, 48, 48, 49, 1 };
@@ -162,6 +161,7 @@ namespace ISO9660.PrimitiveTypes
         /// bibliographical file identifier
         /// </summary>
         public byte[] BibliographicFileId = IsoAlgorithm.MemSet(IsoAlgorithm.BibliographicFileIdLength, IsoAlgorithm.AsciiBlank);
+
         //
 
         // [814-830]

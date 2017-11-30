@@ -1,21 +1,20 @@
-using System;
-using System.IO;
-using System.Collections;
 using BER.CDCat.Export;
 using ISO9660.Enums;
 using IsoCreatorLib.IsoWrappers;
+using System;
+using System.Collections;
+using System.IO;
 
 namespace IsoCreatorLib.DirectoryTree
 {
-
     /// <summary>
     /// The directory (folder element).
     /// </summary>
     internal class IsoDirectory : IsoFolderElement
     {
-
         // The directory memorizes two sizes:
         private UInt32 m_size1;             // The size in sectors occupied by all the short-ascii-named children.
+
         private UInt32 m_size2;             // The size in sectors occupied by all the full-unicode-named children.
 
         #region Constructor for Real directories
@@ -35,7 +34,7 @@ namespace IsoCreatorLib.DirectoryTree
                     // A directory record of a sub-dir has the size equal to 33 + lengthOf(<sub-dir name>)
                     size1 = (UInt32)(child.ShortName.Length + IsoAlgorithm.DefaultDirectoryRecordLength - 1);
                 else
-                    // A directory record of a file has the size equal to 
+                    // A directory record of a file has the size equal to
                     // 33 + lengthOf(<file name>) + lengthOf(";1") - the standard suffix for file names in ISO9660
                     size1 = (UInt32)(child.ShortName.Length + 2 + IsoAlgorithm.DefaultDirectoryRecordLength - 1);
 
@@ -72,7 +71,6 @@ namespace IsoCreatorLib.DirectoryTree
             }
         }
 
-
         private void Initialize(DirectoryInfo directory, UInt32 level, ProgressDelegate Progress)
         {
             Level = level;
@@ -86,7 +84,6 @@ namespace IsoCreatorLib.DirectoryTree
                 int childNumberLength = children.Length.ToString().Length;
                 for (int i = 0; i < children.Length; i++)
                 {
-
                     string childNumber = String.Format("{0:D" + childNumberLength.ToString() + "}", i);
 
                     Children.Add(children[i] is DirectoryInfo ? (IsoFolderElement)
@@ -119,7 +116,7 @@ namespace IsoCreatorLib.DirectoryTree
             Initialize(directory, level, null);
         }
 
-        #endregion
+        #endregion Constructor for Real directories
 
         #region Constructor for Virtual directories (TreeNode)
 
@@ -135,7 +132,6 @@ namespace IsoCreatorLib.DirectoryTree
                 int childNumberLength = children.Length.ToString().Length;
                 for (int i = 0; i < children.Length; i++)
                 {
-
                     string childNumber = String.Format("{0:D" + childNumberLength.ToString() + "}", i);
 
                     Children.Add(children[i].IsDirectory ? (IsoFolderElement)
@@ -144,17 +140,19 @@ namespace IsoCreatorLib.DirectoryTree
 
                     Progress?.Invoke(this, new ProgressEventArgs(i));
                 }
+
                 Children.Sort();
             }
 
             CalculateSize();
         }
 
-        // For ROOT !!
+        /// <summary>
+        /// For ROOT Only !!
+        /// </summary>
         public IsoDirectory(TreeNode directory, UInt32 level, string childNumber, ProgressDelegate Progress)
             : base(directory, true, childNumber)
         {
-
             Parent = this;
 
             Initialize(directory, level, Progress);
@@ -168,7 +166,7 @@ namespace IsoCreatorLib.DirectoryTree
             Initialize(directory, level, null);
         }
 
-        #endregion
+        #endregion Constructor for Virtual directories (TreeNode)
 
         #region Properties
 
@@ -249,13 +247,12 @@ namespace IsoCreatorLib.DirectoryTree
 
         public override bool IsDirectory => true;
 
-        #endregion
+        #endregion Properties
 
         #region I/O Methods
 
         public void WriteFiles(BinaryWriter writer, ProgressDelegate Progress)
         {
-
             foreach (IsoFolderElement child in Children)
             {
                 if (!child.IsDirectory)
@@ -296,7 +293,6 @@ namespace IsoCreatorLib.DirectoryTree
 
             foreach (IsoFolderElement child in Children)
             {
-
                 UInt32 childExtent = (type == VolumeType.Primary) ? child.Extent1 : child.Extent2;
                 UInt32 childSize = (type == VolumeType.Primary) ? child.Size1 : child.Size2;
                 string childName = (type == VolumeType.Primary) ? child.ShortName : child.LongName;
@@ -331,7 +327,7 @@ namespace IsoCreatorLib.DirectoryTree
             return pathTableRecord.Write(writer);
         }
 
-        #endregion
+        #endregion I/O Methods
 
         #region Set Extent Methods
 
@@ -387,8 +383,6 @@ namespace IsoCreatorLib.DirectoryTree
             SetExtent2(stack, index + 1, newCurrentExtent);
         }
 
-        #endregion
-
-
+        #endregion Set Extent Methods
     }
 }

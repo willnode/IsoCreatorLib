@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using BER.CDCat.Export;
+﻿using BER.CDCat.Export;
 using ISO9660.Enums;
-using IsoCreatorLib.IsoWrappers;
 using IsoCreatorLib.DirectoryTree;
+using IsoCreatorLib.IsoWrappers;
+using System;
+using System.IO;
 
 namespace IsoCreatorLib
 {
@@ -15,7 +15,6 @@ namespace IsoCreatorLib
         /// </summary>
         public class IsoCreatorFolderArgs
         {
-
             public string FolderPath { get; private set; }
 
             public string IsoPath { get; private set; }
@@ -28,7 +27,6 @@ namespace IsoCreatorLib
                 IsoPath = isoPath;
                 VolumeName = volumeName;
             }
-
         }
 
         /// <summary>
@@ -37,7 +35,6 @@ namespace IsoCreatorLib
         /// </summary>
         public class IsoCreatorTreeArgs
         {
-
             public TreeNode Volume { get; }
 
             public string IsoPath { get; }
@@ -47,12 +44,9 @@ namespace IsoCreatorLib
                 Volume = volume;
                 IsoPath = isoPath;
             }
-
         }
 
         #region Writing Methods
-
-        #region Helper Methods (SetDirectoryNumbers(dirArray))
 
         /// <summary>
         /// Sets the directory numbers according to the ISO 9660 standard, so that Path Tables could be built. (root=1, first child=2, etc.)
@@ -70,8 +64,6 @@ namespace IsoCreatorLib
                 dirArray[i].Number = (UInt16)(i + 1);
         }
 
-        #endregion
-
         /// <summary>
         /// Writes the first 16 empty sectors of an ISO image.
         /// </summary>
@@ -88,11 +80,11 @@ namespace IsoCreatorLib
         /// 3. Volume descriptor set terminator.
         /// </summary>
         /// <param name="writer">A binary writer to write the data.</param>
-        /// <param name="volumeName">A normal string representing the desired name of the volume. 
-        /// (the maximum standard length for this string is 16 for Joliet, so if the name is larger 
+        /// <param name="volumeName">A normal string representing the desired name of the volume.
+        /// (the maximum standard length for this string is 16 for Joliet, so if the name is larger
         /// than 16 characters, it is truncated.)</param>
         /// <param name="root">The root IsoDirectory, representing the root directory for the volume.</param>
-        /// <param name="volumeSpaceSize">The ISO total space size IN SECTORS. 
+        /// <param name="volumeSpaceSize">The ISO total space size IN SECTORS.
         /// (For example, if the ISO space size is 1,427,456 bytes, then the volumeSpaceSize will be 697)</param>
         /// <param name="pathTableSize1">The first path table size (for the primary volume) IN BYTES.</param>
         /// <param name="pathTableSize2">The second path table size (for the suplementary volume) IN BYTES.</param>
@@ -108,8 +100,7 @@ namespace IsoCreatorLib
                                              UInt32 typeLPathTable1, UInt32 typeMPathTable1,
                                              UInt32 typeLPathTable2, UInt32 typeMPathTable2)
         {
-
-            // Throughout this program I have respected the convention of refering to the root as "."; 
+            // Throughout this program I have respected the convention of refering to the root as ".";
             // However, one should not confuse the root with the current directory, also known as "." (along with the parent directory, "..").
 
             // Primary Volume Descriptor:
@@ -187,7 +178,6 @@ namespace IsoCreatorLib
             return bytesWritten;
         }
 
-        #endregion
-
+        #endregion Writing Methods
     }
 }
