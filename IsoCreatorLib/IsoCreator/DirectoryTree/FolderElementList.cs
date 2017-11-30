@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
 
 namespace IsoCreatorLib.DirectoryTree
@@ -11,12 +9,8 @@ namespace IsoCreatorLib.DirectoryTree
     internal class FolderElementList : CollectionBase
     {
 
-        #region Comparer
-
         public class DirEntryComparer : IComparer
         {
-            #region IComparer Members
-
             public int Compare(object x, object y)
             {
                 string nameX = ((IsoFolderElement)x).LongName;
@@ -24,11 +18,7 @@ namespace IsoCreatorLib.DirectoryTree
 
                 return String.Compare(nameX, nameY, false);
             }
-
-            #endregion
         }
-
-        #endregion
 
         public void Add(IsoFolderElement value)
         {

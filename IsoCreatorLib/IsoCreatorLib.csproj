@@ -62,6 +62,7 @@
     <Compile Include="IsoCreator\DirectoryTree\IsoFolderElement.cs" />
     <Compile Include="IsoCreator\IsoAlgorithm.cs" />
     <Compile Include="IsoCreator\IsoCreator.cs" />
+    <Compile Include="IsoCreator\IsoCreatorUtility.cs" />
     <Compile Include="IsoWrappers\DateWrapper.cs" />
     <Compile Include="IsoWrappers\DirectoryRecordWrapper.cs" />
     <Compile Include="IsoWrappers\PathTableRecordWrapper.cs" />

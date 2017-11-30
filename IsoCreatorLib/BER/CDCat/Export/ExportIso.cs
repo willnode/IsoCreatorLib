@@ -8,8 +8,7 @@ namespace BER.CDCat.Export
     /// It is used only when compiled as external library, and only by CDCat.
     /// </summary>
     public class ExportIso : IExportPlugin
-    {
-        
+    {        
         
         public ExportIso()
         {

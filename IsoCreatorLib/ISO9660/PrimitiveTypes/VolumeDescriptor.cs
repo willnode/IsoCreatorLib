@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using IsoCreatorLib;
 
 namespace ISO9660.PrimitiveTypes

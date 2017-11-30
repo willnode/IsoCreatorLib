@@ -1,21 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BER.CDCat.Export
 {
     public class FinishEventArgs : EventArgs
     {
-
-        public FinishEventArgs(string message)
-        {
-            Message = message;
-        }
+        public FinishEventArgs(string message) { Message = message; }
 
         public string Message { get; set; }
     }
 
-    public class ProgressEventArgs : System.EventArgs
+    public class ProgressEventArgs : EventArgs
     {
 
         public ProgressEventArgs(int current = -1, int maximum = -1, string action = null)
@@ -33,13 +27,10 @@ namespace BER.CDCat.Export
 
     }
 
-    public class AbortEventArgs : System.EventArgs
+    public class AbortEventArgs : EventArgs
     {
 
-        public AbortEventArgs(string message)
-        {
-            Message = message;
-        }
+        public AbortEventArgs(string message) { Message = message; }
 
         public string Message { get; set; }
     }

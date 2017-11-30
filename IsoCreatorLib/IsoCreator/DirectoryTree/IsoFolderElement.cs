@@ -1,126 +1,101 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using BER.CDCat.Export;
 
-namespace IsoCreatorLib.DirectoryTree {
+namespace IsoCreatorLib.DirectoryTree
+{
 
-	/// <summary>
-	/// Base class for all folder elements (files and subfolders).
-	/// </summary>
-	internal abstract class IsoFolderElement {
-
-		#region Fields
-
-		private DateTime m_date;
-
-		private string m_shortIdent;	/* The shortIdent is used for the DOS short-ascii-name. I haven't given too much 
-										 * effort into making it right. It isn't of much use these days.
-										 */
+    /// <summary>
+    /// Base class for all folder elements (files and subfolders).
+    /// </summary>
+    internal abstract class IsoFolderElement
+    {
 
 
-		private string m_identifier;	// The original name. (unicode n stuff)
+        public IsoFolderElement(FileSystemInfo folderElement, bool isRoot, string childNumber)
+        {
+            Date = folderElement.CreationTime;
+            LongName = folderElement.Name;
 
-		#endregion
+            // If you need to use the short name, then you may want to change the naming method.
+            if (isRoot)
+            {
+                ShortName = ".";
+                LongName = ".";
+            }
+            else
+            {
+                if (LongName.Length > 8)
+                {
+                    ShortName = LongName.Substring(0, 8 - childNumber.Length).ToUpper().Replace(' ', '_').Replace('.', '_');
+                    ShortName += childNumber;
+                }
+                else
+                {
+                    ShortName = LongName.ToUpper().Replace(' ', '_').Replace('.', '_');
+                }
+            }
 
-		#region Constructors
+            if (LongName.Length > IsoAlgorithm.FileNameMaxLength)
+            {
+                LongName = LongName.Substring(0, IsoAlgorithm.FileNameMaxLength - childNumber.Length) + childNumber;
+            }
 
-		public IsoFolderElement( FileSystemInfo folderElement, bool isRoot, string childNumber ) {
-			m_date = folderElement.CreationTime;
-			m_identifier = folderElement.Name;
+        }
 
-			// If you need to use the short name, then you may want to change the naming method.
-			if ( isRoot ) {
-				m_shortIdent = ".";
-				m_identifier = ".";
-			} else {
-				if ( m_identifier.Length > 8 ) {
-					m_shortIdent = m_identifier.Substring( 0, 8 - childNumber.Length ).ToUpper().Replace( ' ', '_' ).Replace( '.', '_' );
-					m_shortIdent += childNumber;
-				} else {
-					m_shortIdent = m_identifier.ToUpper().Replace( ' ', '_' ).Replace( '.', '_' );
-				}
-			}
+        public IsoFolderElement(TreeNode folderElement, bool isRoot, string childNumber)
+        {
+            Date = folderElement.CreationTime;
+            LongName = folderElement.Name;
 
-			if ( m_identifier.Length > IsoAlgorithm.FileNameMaxLength ) {
-				m_identifier = m_identifier.Substring( 0, IsoAlgorithm.FileNameMaxLength - childNumber.Length ) + childNumber;
-			}
+            // If you need to use the short name, then you may want to change the naming method.
+            if (isRoot)
+            {
+                ShortName = ".";
+                LongName = ".";
+            }
+            else
+            {
+                if (LongName.Length > 8)
+                {
+                    ShortName = LongName.Substring(0, 8 - childNumber.Length).ToUpper().Replace(' ', '_').Replace('.', '_');
+                    ShortName += childNumber;
+                }
+                else
+                {
+                    ShortName = LongName.ToUpper().Replace(' ', '_').Replace('.', '_');
+                }
+            }
 
-		}
+            if (LongName.Length > IsoAlgorithm.FileNameMaxLength)
+            {
+                LongName = LongName.Substring(0, IsoAlgorithm.FileNameMaxLength - childNumber.Length) + childNumber;
+            }
+        }
 
-		public IsoFolderElement( TreeNode folderElement, bool isRoot, string childNumber ) {
-			m_date = folderElement.CreationTime;
-			m_identifier = folderElement.Name;
 
-			if ( isRoot ) {
-				m_shortIdent = ".";
-				m_identifier = ".";
-			} else {
-				if ( m_identifier.Length > 8 ) {
-					m_shortIdent = m_identifier.Substring( 0, 8 - childNumber.Length ).ToUpper().Replace( ' ', '_' ).Replace( '.', '_' );
-					m_shortIdent += childNumber;
-				} else {
-					m_shortIdent = m_identifier.ToUpper().Replace( ' ', '_' ).Replace( '.', '_' );
-				}
-			}
+        public abstract UInt32 Extent1 { get; set; }
 
-			if ( m_identifier.Length > IsoAlgorithm.FileNameMaxLength ) {
-				m_identifier = m_identifier.Substring( 0, IsoAlgorithm.FileNameMaxLength - childNumber.Length ) + childNumber;
-			}
-		}
+        public abstract UInt32 Extent2 { get; set; }
 
-		#endregion
+        public abstract UInt32 Size1 { get; }
 
-		#region Abstract properties
+        public abstract UInt32 Size2 { get; }
 
-		public abstract UInt32 Extent1 {
-			get;
-			set;
-		}
+        public abstract bool IsDirectory { get; }
 
-		public abstract UInt32 Extent2 {
-			get;
-			set;
-		}
+        public DateTime Date { get; }
 
-		public abstract UInt32 Size1 {
-			get;
-		}
+        /// <summary>
+        /// The shortIdent is used for the DOS short-ascii-name. I haven't given too much 
+        /// effort into making it right. It isn't of much use these days.
+        /// </summary>
+		public string ShortName { get; set; }
 
-		public abstract UInt32 Size2 {
-			get;
-		}
-
-		public abstract bool IsDirectory {
-			get;
-		}
-
-		public DateTime Date {
-			get {
-				return m_date;
-			}
-		}
-
-		public string ShortName {
-			get {
-				return m_shortIdent;
-			}
-			set {
-				m_shortIdent = value;
-			}
-		}
-
-		public string LongName {
-			get {
-				return m_identifier;
-			}
-		}
-
-		#endregion
-
-		#region I/O Methods
-
-		#endregion
-	}
+        /// <summary>
+        /// The original name. (unicode n stuff)
+        /// </summary>
+		public string LongName { get; }
+        
+    }
 }
