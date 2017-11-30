@@ -14,7 +14,7 @@ namespace IsoCreatorLib
         #region Folder to ISO
 
         /// <summary>
-        /// Writes an ISO with the contains of the folder given as a parameter.
+        /// Writes an ISO with the contains of the folder given as a parameter.`
         /// </summary>
         /// <param name="rootDirectoryInfo">The folder to be turned into an iso.</param>
         /// <param name="writer">A binary writer to write the data.</param>
@@ -496,30 +496,15 @@ namespace IsoCreatorLib
 
         public event AbortDelegate Abort;
 
-        private void OnFinished(string message)
-        {
-            Finish?.Invoke(this, new FinishEventArgs(message));
-        }
+        private void OnFinished(string message) => Finish?.Invoke(this, new FinishEventArgs(message));
 
-        private void OnProgress(int current)
-        {
-            Progress?.Invoke(this, new ProgressEventArgs(current));
-        }
+        private void OnProgress(int current) => Progress?.Invoke(this, new ProgressEventArgs(current));
 
-        private void OnProgress(int current, int maximum)
-        {
-            Progress?.Invoke(this, new ProgressEventArgs(current, maximum));
-        }
+        private void OnProgress(int current, int maximum) => Progress?.Invoke(this, new ProgressEventArgs(current, maximum));
 
-        private void OnProgress(string action, int current, int maximum)
-        {
-            Progress?.Invoke(this, new ProgressEventArgs(current, maximum, action));
-        }
+        private void OnProgress(string action, int current, int maximum) => Progress?.Invoke(this, new ProgressEventArgs(current, maximum, action));
 
-        private void OnAbort(string message)
-        {
-            Abort?.Invoke(this, new AbortEventArgs(message));
-        }
+        private void OnAbort(string message) => Abort?.Invoke(this, new AbortEventArgs(message));
 
         #endregion
     }

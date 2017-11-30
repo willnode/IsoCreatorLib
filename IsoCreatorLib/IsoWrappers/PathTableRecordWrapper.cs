@@ -19,14 +19,10 @@ namespace IsoCreatorLib.IsoWrappers
 
         #region Constructors
 
-        public PathTableRecordWrapper()
-        {
-        }
+        public PathTableRecordWrapper() { }
 
         public PathTableRecordWrapper(UInt32 extentLocation, UInt16 parentNumber, string name)
-        {
-            SetPathTableRecord(extentLocation, parentNumber, name);
-        }
+            => SetPathTableRecord(extentLocation, parentNumber, name);
 
         #endregion
 
@@ -35,7 +31,7 @@ namespace IsoCreatorLib.IsoWrappers
         public PathTableRecord Record
         {
             get => m_record;
-            set { m_record = value; }
+            set => m_record = value;
         }
 
         public Endian Endian

@@ -14,7 +14,7 @@ namespace BER.CDCat.Export
         public TreeNode this[int index]
         {
             get => (TreeNode)InnerList[index];
-            set { InnerList[index] = value; }
+            set => InnerList[index] = value;
         }
 
         public TreeNode[] ToArray() => (TreeNode[]) InnerList.ToArray(typeof(TreeNode));

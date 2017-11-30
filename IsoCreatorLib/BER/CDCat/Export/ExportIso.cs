@@ -33,10 +33,8 @@ namespace BER.CDCat.Export
 
         public void DoExport()
         {
-            if (Volume == null || FileName == null)
-                return;
-
-            Creator.Tree2Iso(Volume, FileName);
+            if (Volume != null && FileName != null)
+                Creator.Tree2Iso(Volume, FileName);
         }
 
         public void DoExport(TreeNode volume, string fileName)

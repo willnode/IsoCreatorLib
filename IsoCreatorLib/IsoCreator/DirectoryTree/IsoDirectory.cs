@@ -102,17 +102,17 @@ namespace IsoCreatorLib.DirectoryTree
             CalculateSize();
         }
 
-        // For ROOT !!
-        public IsoDirectory(DirectoryInfo directory, UInt32 level, string childNumber, ProgressDelegate Progress)
-            : base(directory, true, childNumber)
+        /// <summary>
+        /// For ROOT Only !!
+        /// </summary>
+        public IsoDirectory(DirectoryInfo directory, UInt32 level, string childNumber, ProgressDelegate Progress) : base(directory, true, childNumber)
         {
             Parent = this;
 
             Initialize(directory, level, Progress);
         }
 
-        public IsoDirectory(IsoDirectory parent, DirectoryInfo directory, UInt32 level, string childNumber)
-            : base(directory, false, childNumber)
+        public IsoDirectory(IsoDirectory parent, DirectoryInfo directory, UInt32 level, string childNumber) : base(directory, false, childNumber)
         {
             Parent = parent;
 

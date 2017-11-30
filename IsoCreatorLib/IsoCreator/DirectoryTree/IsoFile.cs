@@ -11,80 +11,42 @@ namespace IsoCreatorLib.DirectoryTree
     internal class IsoFile : IsoFolderElement
     {
 
-        #region Fields
 
         private string m_fullPath;
         private UInt32 m_size;
         private UInt32 m_extent;
 
-        #endregion
 
-        #region Constructors
-
-        public IsoFile(FileInfo file, string childNumber)
-            : base(file, false, childNumber)
+        public IsoFile(FileInfo file, string childNumber) : base(file, false, childNumber)
         {
-
             m_fullPath = file.FullName;
             m_size = (UInt32)file.Length;
         }
 
-        public IsoFile(TreeNode file, string childNumber)
-            : base(file, false, childNumber)
+        public IsoFile(TreeNode file, string childNumber) : base(file, false, childNumber)
         {
             m_fullPath = file.FullName;
             m_size = file.Length;
         }
-
-        #endregion
-
-        #region Properties
-
+        
         public override UInt32 Extent1
         {
-            get
-            {
-                return m_extent;
-            }
-            set
-            {
-                m_extent = value;
-            }
+            get => m_extent;
+            set => m_extent = value;
         }
 
         public override UInt32 Extent2
         {
-            get
-            {
-                return m_extent;
-            }
-            set
-            {
-                m_extent = value;
-            }
+            get => m_extent;
+            set => m_extent = value;
         }
 
-        public override UInt32 Size1
-        {
-            get
-            {
-                return m_size;
-            }
-        }
+        public override UInt32 Size1 => m_size;
 
-        public override UInt32 Size2
-        {
-            get
-            {
-                return m_size;
-            }
-        }
+        public override UInt32 Size2 => m_size;
 
         public override bool IsDirectory => false;
 
-        #endregion
-
-        #region I/O Methods
 
         public void Write(BinaryWriter writer, ProgressDelegate Progress)
         {
@@ -120,8 +82,6 @@ namespace IsoCreatorLib.DirectoryTree
             reader.Close();
             source.Close();
         }
-
-        #endregion
 
     }
 }

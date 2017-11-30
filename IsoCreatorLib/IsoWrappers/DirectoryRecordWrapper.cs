@@ -122,12 +122,11 @@ namespace IsoCreatorLib.IsoWrappers
 
         #region Constructors
 
-        public DirectoryRecordWrapper(DateTime date, bool isDirectory, string name) => SetDirectoryRecord(0, 0, date, isDirectory, name);
+        public DirectoryRecordWrapper(DateTime date, bool isDirectory, string name) 
+            => SetDirectoryRecord(0, 0, date, isDirectory, name);
 
-        public DirectoryRecordWrapper(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name)
-        {
-            SetDirectoryRecord(extentLocation, dataLength, date, isDirectory, name);
-        }
+        public DirectoryRecordWrapper(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name) 
+            => SetDirectoryRecord(extentLocation, dataLength, date, isDirectory, name);
 
         public DirectoryRecordWrapper(DirectoryRecord directoryRecord)
         {
@@ -198,9 +197,7 @@ namespace IsoCreatorLib.IsoWrappers
         }
 
         public void SetDirectoryRecord(UInt32 extentLocation, UInt32 dataLength, DateTime date, bool isDirectory, string name)
-        {
-            SetDirectoryRecord(extentLocation, dataLength, date, 8, isDirectory, name);
-        }
+            => SetDirectoryRecord(extentLocation, dataLength, date, 8, isDirectory, name);
 
         #endregion
 

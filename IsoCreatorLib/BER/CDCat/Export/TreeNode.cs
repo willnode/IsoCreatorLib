@@ -40,7 +40,6 @@ namespace BER.CDCat.Export
         /// <returns></returns>
         public override string ToString()
         {
-
             var str = new StringBuilder($"<node name=\"{ Name }\" dir=\"true\">");
 
             foreach (TreeNode dir in Directories)

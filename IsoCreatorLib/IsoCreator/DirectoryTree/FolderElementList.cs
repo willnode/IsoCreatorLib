@@ -20,21 +20,15 @@ namespace IsoCreatorLib.DirectoryTree
             }
         }
 
-        public void Add(IsoFolderElement value)
-        {
-            InnerList.Add(value);
-        }
+        public void Add(IsoFolderElement value) => InnerList.Add(value);
 
-        public void Sort()
-        {
-            DirEntryComparer dirEntryComparer = new DirEntryComparer();
-            InnerList.Sort(dirEntryComparer);
-        }
+
+        public void Sort() => InnerList.Sort(new DirEntryComparer());
 
         public IsoFolderElement this[int index]
         {
             get => (IsoFolderElement)InnerList[index];
-            set { InnerList[index] = value; }
+            set => InnerList[index] = value;
         }
     }
 }

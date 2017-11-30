@@ -19,13 +19,13 @@ namespace IsoCreatorLib.IsoWrappers
         public BinaryDateRecord BinaryDateRecord
         {
             get => m_binaryDateRecord;
-            set { m_binaryDateRecord = value; }
+            set => m_binaryDateRecord = value;
         }
 
         public AsciiDateRecord AsciiDateRecord
         {
             get => m_asciiDateRecord;
-            set { m_asciiDateRecord = value; }
+            set => m_asciiDateRecord = value;
         }
 
         public DateTime Date
@@ -42,17 +42,14 @@ namespace IsoCreatorLib.IsoWrappers
         public sbyte TimeZone
         {
             get => m_asciiDateRecord.TimeZone;
-            set { m_asciiDateRecord.TimeZone = value; }
+            set => m_asciiDateRecord.TimeZone = value;
         }
 
         #endregion
 
         #region Constructor(s)
 
-        public DateWrapper(DateTime date)
-        {
-            Date = date;
-        }
+        public DateWrapper(DateTime date) => Date = date;
 
         public DateWrapper(DateTime date, sbyte timeZone)
         {
@@ -100,9 +97,7 @@ namespace IsoCreatorLib.IsoWrappers
             m_binaryDateRecord.Second = second;
         }
 
-        private void SetBinaryDateRecord(DateTime date)
-        {
-            SetBinaryDateRecord(
+        private void SetBinaryDateRecord(DateTime date) => SetBinaryDateRecord(
                 (byte)(date.Year - 1900),
                 (byte)date.Month,
                 (byte)date.Day,
@@ -110,7 +105,6 @@ namespace IsoCreatorLib.IsoWrappers
                 (byte)date.Minute,
                 (byte)date.Second
             );
-        }
 
         private void SetAsciiDateRecord(int year, int month, int dayOfMonth, int hour, int minute, int second, int hundredthsOfSecond, sbyte timeZone)
         {
@@ -134,15 +128,10 @@ namespace IsoCreatorLib.IsoWrappers
             m_asciiDateRecord.TimeZone = timeZone;
         }
 
-        private void SetAsciiDateRecord(DateTime date, sbyte timeZone)
-        {
-            SetAsciiDateRecord(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond / 10, timeZone);
-        }
+        private void SetAsciiDateRecord(DateTime date, sbyte timeZone) 
+            => SetAsciiDateRecord(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond / 10, timeZone);
 
-        private void SetAsciiDateRecord(DateTime date)
-        {
-            SetAsciiDateRecord(date, 8);
-        }
+        private void SetAsciiDateRecord(DateTime date) => SetAsciiDateRecord(date, 8);
 
         public void ResetAsciiDateRecord()
         {
@@ -157,7 +146,7 @@ namespace IsoCreatorLib.IsoWrappers
 
         public int WriteBinaryDateRecord(BinaryWriter writer)
         {
-            if (m_binaryDateRecord == null)               return 0;
+            if (m_binaryDateRecord == null) return 0;
 
             writer.Write(new byte[6] {
                     m_binaryDateRecord.Year,

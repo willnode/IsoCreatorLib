@@ -24,17 +24,11 @@ namespace IsoCreatorLib.IsoWrappers
         #region Constructors
 
         public VolumeDescriptorWrapper(string volumeName, DirectoryRecordWrapper root, DateTime creationDate, DateTime modificationDate)
-        {
-            SetVolumeDescriptor(volumeName, 0, 0, 0, 0, root, creationDate, modificationDate, 8);
-        }
+            => SetVolumeDescriptor(volumeName, 0, 0, 0, 0, root, creationDate, modificationDate, 8);
 
         public VolumeDescriptorWrapper(string volumeName, UInt32 volumeSpaceSize, UInt32 pathTableSize, UInt32 typeLPathTable, UInt32 typeMPathTable,
                                     DirectoryRecordWrapper root, DateTime creationDate, DateTime modificationDate, sbyte timeZone)
-        {
-
-            SetVolumeDescriptor(volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable, root, creationDate,
-                                      modificationDate, timeZone);
-        }
+            => SetVolumeDescriptor(volumeName, volumeSpaceSize, pathTableSize, typeLPathTable, typeMPathTable, root, creationDate, modificationDate, timeZone);
 
         #endregion
 
@@ -98,25 +92,25 @@ namespace IsoCreatorLib.IsoWrappers
         public UInt32 VolumeSpaceSize
         {
             get => IsoAlgorithm.ValueFromBothEndian(m_volumeDescriptor.VolumeSpaceSize);
-            set { m_volumeDescriptor.VolumeSpaceSize = IsoAlgorithm.BothEndian(value); }
+            set => m_volumeDescriptor.VolumeSpaceSize = IsoAlgorithm.BothEndian(value);
         }
 
         public UInt32 PathTableSize
         {
             get => IsoAlgorithm.ValueFromBothEndian(m_volumeDescriptor.PathTableSize);
-            set { m_volumeDescriptor.PathTableSize = IsoAlgorithm.BothEndian(value); }
+            set => m_volumeDescriptor.PathTableSize = IsoAlgorithm.BothEndian(value);
         }
 
         public UInt32 TypeLPathTable
         {
             get => m_volumeDescriptor.TypeLPathTable;
-            set { m_volumeDescriptor.TypeLPathTable = value; }
+            set => m_volumeDescriptor.TypeLPathTable = value;
         }
 
         public UInt32 TypeMPathTable
         {
             get => IsoAlgorithm.ChangeEndian(m_volumeDescriptor.TypeMPathTable);
-            set { m_volumeDescriptor.TypeMPathTable = IsoAlgorithm.ChangeEndian(value); }
+            set => m_volumeDescriptor.TypeMPathTable = IsoAlgorithm.ChangeEndian(value);
         }
 
         #endregion
@@ -173,22 +167,17 @@ namespace IsoCreatorLib.IsoWrappers
                                           UInt32 typeLPathTable, UInt32 typeMPathTable, DirectoryRecordWrapper rootDir, DateTime creationDate, DateTime modificationDate, sbyte timeZone)
         {
 
-            byte[] lSystemId;
-            byte[] lVolumeId;
+            byte[] lSystemId, lVolumeId;
 
             if (VolumeDescriptorType == VolumeType.Primary)
             {
-
                 lSystemId = IsoAlgorithm.StringToByteArray(systemId, IsoAlgorithm.SystemIdLength);
                 lVolumeId = IsoAlgorithm.StringToByteArray(volumeId, IsoAlgorithm.VolumeIdLength);
-
             }
             else if (VolumeDescriptorType == VolumeType.Suplementary)
             {
-
                 lSystemId = IsoAlgorithm.AsciiToUnicode(systemId, IsoAlgorithm.SystemIdLength);
                 lVolumeId = IsoAlgorithm.AsciiToUnicode(volumeId, IsoAlgorithm.VolumeIdLength);
-
             }
             else
             {
@@ -201,7 +190,9 @@ namespace IsoCreatorLib.IsoWrappers
             UInt64 lPathTableSize = IsoAlgorithm.BothEndian(pathTableSize);
 
             // typeLPathTable remains unchanged, but typeMPathTable has to change byte order.
+
             UInt32 lTypeMPathTable = IsoAlgorithm.ChangeEndian(typeMPathTable);
+
             DateWrapper lCreationDate = new DateWrapper(creationDate, timeZone);
 
             DateWrapper lModificationDate = new DateWrapper(modificationDate, timeZone);
