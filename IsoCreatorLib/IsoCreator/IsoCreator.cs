@@ -464,13 +464,23 @@ namespace IsoCreatorLib
 
         public event AbortDelegate Abort;
 
+        private ProgressEventArgs progress = new ProgressEventArgs();
+
         private void OnFinished(string message) => Finish?.Invoke(this, new FinishEventArgs(message));
 
-        private void OnProgress(int current) => Progress?.Invoke(this, new ProgressEventArgs(current));
+        private void OnProgress(int current)
+        {
+            progress.Current = current;
+            Progress?.Invoke(this, progress);
+        }
 
-        private void OnProgress(int current, int maximum) => Progress?.Invoke(this, new ProgressEventArgs(current, maximum));
-
-        private void OnProgress(string action, int current, int maximum) => Progress?.Invoke(this, new ProgressEventArgs(current, maximum, action));
+        private void OnProgress(string action, int current, int maximum)
+        {
+            progress.Current = current;
+            progress.Action = action;
+            progress.Maximum = maximum;
+            Progress?.Invoke(this, progress);
+        }
 
         private void OnAbort(string message) => Abort?.Invoke(this, new AbortEventArgs(message));
 
